@@ -7,21 +7,33 @@
 #include "DialogueComponent.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS( ClassGroup=(Custom), BlueprintType, Blueprintable, meta=(BlueprintSpawnableComponent) )
 class DIALOGUESYS_API UDialogueComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+public:
 	// Sets default values for this component's properties
 	UDialogueComponent();
 
+	UPROPERTY(BlueprintReadWrite)
+	bool bIsDialogueTriggered;
+
+	UPROPERTY(BlueprintReadWrite)
+	bool bCanInteract;
+
 	//The data table containing the dialogues for the specific owner actor
 	UPROPERTY(BlueprintReadWrite)
-	UDataTable* DialogueDT;
+	UDataTable* CurrentDialogueDT;
+
+	UPROPERTY(BlueprintReadWrite)
+	AActor* DialogueTarget;
 
 	UFUNCTION(BlueprintCallable)
 	void GetNextDialogue();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartDialogue();
 
 protected:
 	// Called when the game starts

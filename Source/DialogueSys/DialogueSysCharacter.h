@@ -4,6 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Public/Interfaces/Interactive.h"
+#include "Public/Interfaces/Dialogue.h"
+#include "Public/Interfaces/PlayerCharacterInterface.h"
+#include "Public/Components/DialogueComponent.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
 #include "DialogueSysCharacter.generated.h"
@@ -20,7 +23,7 @@ DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
  *  Implements a controllable orbiting camera
  */
 UCLASS(abstract)
-class ADialogueSysCharacter : public ACharacter
+class ADialogueSysCharacter : public ACharacter, public IPlayerCharacterInterface
 {
 	GENERATED_BODY()
 
@@ -31,6 +34,9 @@ class ADialogueSysCharacter : public ACharacter
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FollowCamera;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	UDialogueComponent* DialogueComponent;
 	
 protected:
 
@@ -94,6 +100,9 @@ public:
 	/** Handles jump pressed inputs from either controls or UI interfaces */
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void Interact();
+
+	virtual void StartDialogue(AActor* DialogueActor, UDataTable* DialogueDT);
+	virtual APlayerController* GetPlayerController();
 
 public:
 

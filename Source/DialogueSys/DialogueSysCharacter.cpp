@@ -141,7 +141,26 @@ void ADialogueSysCharacter::Interact()
 	{
 		if (CurrentInteractiveActor->Implements<UInteractive>())
 		{
-			IInteractive::Execute_Interact(CurrentInteractiveActor);
+			IInteractive::Execute_Interact(CurrentInteractiveActor, this);
 		}
+	}
+}
+
+void ADialogueSysCharacter::StartDialogue(AActor* DialogueActor, UDataTable* DialogueDT)
+{
+	DialogueComponent->DialogueTarget = DialogueActor;
+	DialogueComponent->CurrentDialogueDT = DialogueDT;
+	DialogueComponent->StartDialogue();
+}
+
+APlayerController* ADialogueSysCharacter::GetPlayerController()
+{
+	if (APlayerController* PC = Cast<APlayerController>(GetController()))
+	{
+		return PC;
+	}
+	else
+	{
+		return nullptr;
 	}
 }
