@@ -139,9 +139,9 @@ void ADialogueSysCharacter::Interact()
 {
 	if (IsValid(CurrentInteractiveActor))
 	{
-		if (IInteractive* InteractiveActor = Cast<IInteractive>(CurrentInteractiveActor))
+		if (CurrentInteractiveActor->Implements<UInteractive>())
 		{
-			InteractiveActor->Interact();
+			IInteractive::Execute_Interact(CurrentInteractiveActor);
 		}
 	}
 }
