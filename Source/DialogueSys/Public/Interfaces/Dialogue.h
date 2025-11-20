@@ -1,4 +1,5 @@
-// This interface should be used by player character to hold and trigger functions related to the dialogue component
+/*This interface should be implemented in characters or objects capable 
+  of starting conversations with players*/
 
 #pragma once
 
@@ -13,18 +14,17 @@ class UDialogueActor : public UInterface
 	GENERATED_BODY()
 };
 
-/**
- * 
- */
+
 class DIALOGUESYS_API IDialogueActor
 {
 	GENERATED_BODY()
 
-	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	//UFUNCTION(BlueprintCallable)
-	//virtual void StartDialogue(UDataTable* DialogueDT) = 0;
 
+	//Used to get the state of the conversation, returns the row from which the dialogue should start
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	FName GetCurrentDialogueRow();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateCurrentDialogueRow(FName NewRow);
 };
