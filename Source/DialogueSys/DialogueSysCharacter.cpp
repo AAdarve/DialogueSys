@@ -65,6 +65,9 @@ void ADialogueSysCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ADialogueSysCharacter::Look);
+
+		//Interaction
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &ADialogueSysCharacter::Interact);
 	}
 	else
 	{
@@ -130,4 +133,15 @@ void ADialogueSysCharacter::DoJumpEnd()
 {
 	// signal the character to stop jumping
 	StopJumping();
+}
+
+void ADialogueSysCharacter::Interact() 
+{
+	if (IsValid(CurrentInteractiveActor))
+	{
+		if (IInteractive* InteractiveActor = Cast<IInteractive>(CurrentInteractiveActor))
+		{
+			InteractiveActor->Interact();
+		}
+	}
 }
